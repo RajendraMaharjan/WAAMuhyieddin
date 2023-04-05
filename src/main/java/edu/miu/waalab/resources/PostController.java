@@ -38,9 +38,13 @@ public class PostController {
      * @return returns {@link ResponseEntity} of post results based on the search done
      */
     @PostMapping(path = "/search", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> searchPosts(@RequestBody SearchPost searchPost) {
-
-        return ResponseEntity.ok(postService.searchingPosts(searchPost));
+    public ResponseEntity<?> searchPosts(@RequestBody SearchPost searchPost,
+                                         @RequestHeader(name = "APIVER", required = false, defaultValue = "V1") String apiVersion) {
+        if (apiVersion.equals("V1")) {
+            return ResponseEntity.ok(postService.searchingPosts(searchPost));
+        } else {
+            return ResponseEntity.ok(postService.searchingPostV2s(searchPost));
+        }
 
 //        SearchPostTypes iniSearch = searchPost.getSearchPostTypes();
 //        String value = searchPost.getSearchContent();

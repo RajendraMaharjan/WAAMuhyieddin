@@ -3,6 +3,7 @@ package edu.miu.waalab.services.impl;
 import edu.miu.waalab.domain.Post;
 import edu.miu.waalab.domain.dto.PostDTO;
 import edu.miu.waalab.domain.dto.PostsDTO;
+import edu.miu.waalab.domain.dto.PostsV2DTO;
 import edu.miu.waalab.domain.value.SearchPost;
 import edu.miu.waalab.domain.value.enums.SearchPostTypes;
 import edu.miu.waalab.repository.PostRepository;
@@ -55,6 +56,12 @@ public class PostServiceImpl implements PostService {
     public PostDTO savePost(PostDTO postDTO) {
         postRepository.savePost(mapperAdapter.getPostFromPostDTO(postDTO));
         return postDTO;
+    }
+
+    @Override
+    public PostsV2DTO searchingPostV2s(SearchPost searchPost) {
+        PostsV2DTO postsV2DTO = mapperAdapter.getPostsV2DTOFromPostsV2(postRepository.searchingPostsV2(searchPost));
+        return postsV2DTO;
     }
 
     @Override

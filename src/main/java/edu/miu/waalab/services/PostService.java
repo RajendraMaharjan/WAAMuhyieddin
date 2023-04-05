@@ -2,6 +2,7 @@ package edu.miu.waalab.services;
 
 import edu.miu.waalab.domain.dto.PostDTO;
 import edu.miu.waalab.domain.dto.PostsDTO;
+import edu.miu.waalab.domain.dto.PostsV2DTO;
 import edu.miu.waalab.domain.value.SearchPost;
 
 import java.util.Optional;
@@ -22,4 +23,5 @@ public interface PostService {
 
     PostDTO savePost(PostDTO postDTO);
 
+    PostsV2DTO searchingPostV2s(SearchPost searchPost);
 }
