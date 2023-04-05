@@ -5,23 +5,21 @@ import edu.miu.waalab.domain.value.ResponseMessage;
 import edu.miu.waalab.domain.value.SearchPost;
 import edu.miu.waalab.domain.value.enums.SearchPostTypes;
 import edu.miu.waalab.services.PostService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping(path = "/posts")
 public class PostController {
 
     @Autowired
     PostService postService;
 
-    @GetMapping("/")
+    @GetMapping(path = "/", produces = "application/json")
     public ResponseEntity<?> getAllPosts(@RequestParam(required = false) String author) {
 
         if (author != null && !author.isEmpty()) {
@@ -39,7 +37,7 @@ public class PostController {
      * @param searchPost {@link SearchPost} Object for searching posts specified by the user
      * @return returns {@link ResponseEntity} of post results based on the search done
      */
-    @PostMapping("/search")
+    @PostMapping(path = "/search", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> searchPosts(@RequestBody SearchPost searchPost) {
 
         return ResponseEntity.ok(postService.searchingPosts(searchPost));
@@ -56,7 +54,7 @@ public class PostController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<?> getPost(@PathVariable("id") Long id) {
 
         Optional<PostDTO> postDTO = postService.getPost(id);
@@ -67,12 +65,12 @@ public class PostController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> savePost(@RequestBody PostDTO postDTO) {
         return ResponseEntity.ok(postService.savePost(postDTO));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deletePost(@PathVariable("id") Long id) {
         boolean result = postService.deletePost(id);
 
@@ -80,7 +78,7 @@ public class PostController {
                 : new ResponseEntity<>(new ResponseMessage("Item NOT FOUND", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/")
+    @PutMapping(path = "/", consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> updatePost(@RequestBody PostDTO postDTO) {
         Optional<PostDTO> updated = postService.updatePost(postDTO);
         if (updated.isPresent()) {
