@@ -1,5 +1,6 @@
-package edu.miu.waalab.domain;
+package edu.miu.waalab.post.domain;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
@@ -7,8 +8,12 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "post")
 public class Post {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private String content;
     private String author;
@@ -24,5 +29,11 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, content, author);
+    }
+
+    public Post(String title, String content, String author) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
     }
 }

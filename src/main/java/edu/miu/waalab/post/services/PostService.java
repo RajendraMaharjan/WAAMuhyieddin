@@ -1,9 +1,9 @@
-package edu.miu.waalab.services;
+package edu.miu.waalab.post.services;
 
-import edu.miu.waalab.domain.dto.PostDTO;
-import edu.miu.waalab.domain.dto.PostsDTO;
-import edu.miu.waalab.domain.dto.PostsV2DTO;
-import edu.miu.waalab.domain.value.SearchPost;
+import edu.miu.waalab.post.domain.dto.PostDTO;
+import edu.miu.waalab.post.domain.dto.PostsDTO;
+import edu.miu.waalab.post.domain.dto.PostsV2DTO;
+import edu.miu.waalab.post.domain.value.SearchPost;
 
 import java.util.Optional;
 

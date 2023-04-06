@@ -1,4 +1,4 @@
-package edu.miu.waalab.domain.dto;
+package edu.miu.waalab.post.domain.dto;
 
 import lombok.Data;
 

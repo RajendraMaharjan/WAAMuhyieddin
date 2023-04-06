@@ -1,4 +1,4 @@
-package edu.miu.waalab.domain.value;
+package edu.miu.waalab.post.domain.value;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

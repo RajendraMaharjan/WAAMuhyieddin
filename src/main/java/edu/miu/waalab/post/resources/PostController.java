@@ -1,10 +1,10 @@
-package edu.miu.waalab.resources;
+package edu.miu.waalab.post.resources;
 
-import edu.miu.waalab.domain.dto.PostDTO;
-import edu.miu.waalab.domain.value.ResponseMessage;
-import edu.miu.waalab.domain.value.SearchPost;
-import edu.miu.waalab.domain.value.enums.SearchPostTypes;
-import edu.miu.waalab.services.PostService;
+import edu.miu.waalab.post.domain.dto.PostDTO;
+import edu.miu.waalab.post.domain.value.ResponseMessage;
+import edu.miu.waalab.post.domain.value.SearchPost;
+import edu.miu.waalab.post.domain.value.enums.SearchPostTypes;
+import edu.miu.waalab.post.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package edu.miu.waalab.domain.value.enums;
+package edu.miu.waalab.post.domain.value.enums;
 
 public enum SearchPostTypes {
     TITLE("title"), CONTENT("content"), AUTHOR("author");

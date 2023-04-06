@@ -1,6 +1,6 @@
-package edu.miu.waalab.domain.value;
+package edu.miu.waalab.post.domain.value;
 
-import edu.miu.waalab.domain.value.enums.SearchPostTypes;
+import edu.miu.waalab.post.domain.value.enums.SearchPostTypes;
 import lombok.Data;
 
 @Data
