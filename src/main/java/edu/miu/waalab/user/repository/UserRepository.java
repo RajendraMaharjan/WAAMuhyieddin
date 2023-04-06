@@ -12,6 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findUserByPostsGreaterThan(Long id);
 
-    @Query("select u from User u JOIN u.posts p where SIZE(u.posts) > 1")
+    @Query("select u from User u where SIZE(u.posts) > 1")
+//    @Query("select u from User u JOIN u.posts p where SIZE(u.posts) > 1")
     List<User> findUsersHavingPostGrTnOne();
 }
