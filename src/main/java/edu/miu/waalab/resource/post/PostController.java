@@ -18,7 +18,7 @@ import java.util.Optional;
 public class PostController {
 
     @Autowired
-    PostService postService;
+    private PostService postService;
 
     @GetMapping(path = "/", produces = "application/json")
     public ResponseEntity<?> getAllPosts(@RequestParam(required = false) String author) {

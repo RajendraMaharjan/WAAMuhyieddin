@@ -24,14 +24,13 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
     @Autowired
-    CommentService commentService;
-
+    private CommentService commentService;
     @Autowired
-    DTOMapperAdapter adapter;
+    private DTOMapperAdapter adapter;
 
     @Override
     public UsersDTO getAllUsers() {

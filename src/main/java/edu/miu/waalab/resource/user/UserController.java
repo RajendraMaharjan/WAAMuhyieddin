@@ -1,5 +1,6 @@
 package edu.miu.waalab.resource.user;
 
+import edu.miu.waalab.aspects.annotation.ExecutionTime;
 import edu.miu.waalab.domain.comment.Comment;
 import edu.miu.waalab.domain.post.dto.PostDTO;
 import edu.miu.waalab.domain.post.value.ResponseMessage;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping(path = "/", produces = "application/json")
     public ResponseEntity<?> getAllUsers() {
@@ -27,6 +28,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
+    @ExecutionTime
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) throws ItemNotFoundException {
 
         Optional<UserDTO> oUser = userService.getUser(id);
@@ -87,8 +89,8 @@ public class UserController {
 
     @GetMapping(path = "/wayI/{userId}/posts/{postId}/comments/{commentId}", produces = "application/json")
     public ResponseEntity<?> getCommentWithInAPostFromAUserMultipleQuery(@PathVariable(required = true) Long userId,
-                                                            @PathVariable(required = true) Long postId,
-                                                            @PathVariable(required = true) Long commentId) throws ItemNotFoundException {
+                                                                         @PathVariable(required = true) Long postId,
+                                                                         @PathVariable(required = true) Long commentId) throws ItemNotFoundException {
 
         Optional<Comment> oComment = userService.getCommentWithInAPostFromAUserWAYI(userId, postId, commentId);
 

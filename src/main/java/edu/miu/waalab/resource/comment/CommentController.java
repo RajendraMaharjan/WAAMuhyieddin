@@ -14,11 +14,10 @@ import java.util.Optional;
 public class CommentController {
 
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
 
     @PostMapping(path = "/{pId}/comments", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> saveCommentToPost(@PathVariable("pId") Long postId,
-                                               @RequestBody Comment comment) throws ItemNotFoundException {
+    public ResponseEntity<?> saveCommentToPost(@PathVariable("pId") Long postId, @RequestBody Comment comment) throws ItemNotFoundException {
         Optional<Comment> oComment = commentService.saveCommentToPost(postId, comment);
 
         if (oComment.isPresent()) {

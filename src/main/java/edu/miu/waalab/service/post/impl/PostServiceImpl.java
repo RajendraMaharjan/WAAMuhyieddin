@@ -18,10 +18,10 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
     @Autowired
-    DTOMapperAdapter mapperAdapter;
+    private DTOMapperAdapter mapperAdapter;
 
     @Override
     public PostsDTO getAllPosts() {

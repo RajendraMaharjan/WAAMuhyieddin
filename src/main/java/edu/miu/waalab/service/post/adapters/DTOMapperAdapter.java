@@ -20,65 +20,50 @@ import java.util.stream.Collectors;
 public class DTOMapperAdapter {
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     public <T, U> U convertObject(T object, Class<U> targetClass) {
         return modelMapper.map(object, targetClass);
     }
 
     public PostsDTO getPostsDTOFromPosts(List<Post> allPosts) {
-        List<PostDTO> dtos = allPosts.stream()
-                .map(x -> modelMapper.map(x, PostDTO.class))
-                .collect(Collectors.toList());
+        List<PostDTO> dtos = allPosts.stream().map(x -> modelMapper.map(x, PostDTO.class)).collect(Collectors.toList());
         return new PostsDTO(dtos.size(), dtos);
     }
 
     public PostsV2DTO getPostsV2DTOFromPostsV2(List<PostV2> allPosts) {
-        List<PostV2DTO> dtos = allPosts.stream()
-                .map(x -> modelMapper.map(x, PostV2DTO.class))
-                .collect(Collectors.toList());
+        List<PostV2DTO> dtos = allPosts.stream().map(x -> modelMapper.map(x, PostV2DTO.class)).collect(Collectors.toList());
         return new PostsV2DTO(dtos.size(), dtos);
     }
 
 
     //    Make generic if it's possible later
     public UsersDTO getUsersDTOFromUsers(List<User> allUsers) {
-        List<UserDTO> dtos = allUsers.stream()
-                .map(user -> {
+        List<UserDTO> dtos = allUsers.stream().map(user -> {
 
-                    List<PostDTO> postDTOList = user.getPosts()
-                            .stream()
-                            .map(pos -> convertObject(pos, PostDTO.class))
-                            .collect(Collectors.toList());
+            List<PostDTO> postDTOList = user.getPosts().stream().map(pos -> convertObject(pos, PostDTO.class)).collect(Collectors.toList());
 
-                    UserDTO userDTO = new UserDTO();
-                    userDTO.setId(user.getId());
-                    userDTO.setName(user.getName());
-                    userDTO.setPosts(postDTOList);
-                    return userDTO;
-                })
-                .collect(Collectors.toList());
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setName(user.getName());
+            userDTO.setPosts(postDTOList);
+            return userDTO;
+        }).collect(Collectors.toList());
 
         return new UsersDTO(dtos.size(), dtos);
     }
 
     public User getUserFromUserDTO(UserDTO ud) {
-        return new User(ud.getId(), ud.getName(), ud.getPosts()
-                .stream()
+        return new User(ud.getId(), ud.getName(), ud.getPosts().stream()
 //                .map(postDTO -> convertObject(postDTO, Post.class))
                 .map(postDTO -> {
-                    Post p = new Post(postDTO.getTitle(), postDTO.getContent(), postDTO.getAuthor(),
-                            postDTO.getComments());
+                    Post p = new Post(postDTO.getTitle(), postDTO.getContent(), postDTO.getAuthor(), postDTO.getComments());
                     return p;
-                })
-                .collect(Collectors.toList()));
+                }).collect(Collectors.toList()));
     }
 
     public UserDTO getUserDTOFromUser(User u) {
-        List<PostDTO> pds = u.getPosts()
-                .stream()
-                .map(p -> convertObject(p, PostDTO.class))
-                .collect(Collectors.toList());
+        List<PostDTO> pds = u.getPosts().stream().map(p -> convertObject(p, PostDTO.class)).collect(Collectors.toList());
 
         return new UserDTO(u.getId(), u.getName(), pds);
     }

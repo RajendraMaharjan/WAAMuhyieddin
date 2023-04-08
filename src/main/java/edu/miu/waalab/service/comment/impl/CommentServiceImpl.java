@@ -19,10 +19,10 @@ import java.util.Optional;
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
-    PostService postService;
+    private PostService postService;
 
 
     @PersistenceContext
