@@ -1,5 +1,6 @@
-package edu.miu.waalab.domain.user.dto;
+package edu.miu.waalab.domain.user.dto.response;
 
+import edu.miu.waalab.domain.user.dto.request.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

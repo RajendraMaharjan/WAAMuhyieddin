@@ -3,8 +3,9 @@ package edu.miu.waalab.service.user;
 import edu.miu.waalab.domain.comment.Comment;
 import edu.miu.waalab.domain.post.dto.PostDTO;
 import edu.miu.waalab.domain.post.dto.PostsDTO;
-import edu.miu.waalab.domain.user.dto.UserDTO;
-import edu.miu.waalab.domain.user.dto.UsersDTO;
+import edu.miu.waalab.domain.user.dto.request.UserDTO;
+import edu.miu.waalab.domain.user.dto.response.UserResponse;
+import edu.miu.waalab.domain.user.dto.response.UsersDTO;
 
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ public interface UserService {
 
     UsersDTO getAllUsers();
 
-    Optional<UserDTO> getUser(Long id);
+    Optional<UserResponse> getUser(Long id);
 
     UserDTO saveUser(UserDTO userDTO);
 

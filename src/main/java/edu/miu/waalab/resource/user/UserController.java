@@ -4,6 +4,7 @@ import edu.miu.waalab.aspects.annotation.ExecutionTime;
 import edu.miu.waalab.domain.comment.Comment;
 import edu.miu.waalab.domain.post.dto.PostDTO;
 import edu.miu.waalab.domain.post.value.ResponseMessage;
+import edu.miu.waalab.domain.user.dto.response.UserResponse;
 import edu.miu.waalab.errors.customexception.ItemNotFoundException;
 import edu.miu.waalab.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import edu.miu.waalab.domain.user.dto.UserDTO;
+import edu.miu.waalab.domain.user.dto.request.UserDTO;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/users")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     @Autowired
@@ -31,10 +33,11 @@ public class UserController {
     @ExecutionTime
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) throws ItemNotFoundException {
 
-        Optional<UserDTO> oUser = userService.getUser(id);
+        Optional<UserResponse> oUser = userService.getUser(id);
 
         if (oUser.isPresent()) {
-            return ResponseEntity.ok(oUser.get());
+//            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return ResponseEntity.ok().body(oUser.get());
         } else {
             throw new ItemNotFoundException("User not found.");
         }

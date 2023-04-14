@@ -6,6 +6,7 @@ import edu.miu.waalab.errors.customexception.ItemNotFoundException;
 import edu.miu.waalab.service.logging.ExceptionEntityService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -21,8 +22,8 @@ import static edu.miu.waalab.constant.StaticConstants.USER;
 @Configuration
 public class ExceptionAspects {
 
-    @Autowired
-    private HttpServletRequest request;
+//    @Autowired
+//    private HttpServletRequest request;
 
     @Autowired
     private ExceptionEntityService exceptionEntityService;
@@ -36,14 +37,24 @@ public class ExceptionAspects {
         exceptionEntityService.saveExceptionEntity(exceptionEntity);
     }
 
+    @Pointcut("execution(* edu.miu.waalab.*.*.*.*.*(..))")
+    public void returningLogger() {
+    }
+
+    @AfterReturning(value = "returningLogger()", returning = "obj")
+    public void loggingProgramExecutions(JoinPoint joinPoint, Object obj) {
+        System.out.println(obj);
+    }
+
+
     private ExceptionEntity buildExceptionEntity(JoinPoint joinPoint, Throwable exception) {
 
         StringBuilder builder = new StringBuilder();
         builder.append("Execution type: ").append(joinPoint.getKind()).append(TAB)
                 .append(", Operation performed in class: ").append(joinPoint.getSignature().getDeclaringType().getSimpleName()).append(TAB)
-                .append(" as: ").append(joinPoint.getSignature().getName()).append(TAB)
-                .append(" Method Type: ").append(request.getMethod()).append(TAB)
-                .append(" Request URI: ").append(request.getRequestURL());
+                .append(" as: ").append(joinPoint.getSignature().getName()).append(TAB);
+//                .append(" Method Type: ").append(request.getMethod()).append(TAB)
+//                .append(" Request URI: ").append(request.getRequestURL());
 
         StringBuilder expType = new StringBuilder();
         expType.append("Exception Occurred: ").append(exception.getClass().getSimpleName()).append(", With message: ").append(exception.getMessage());

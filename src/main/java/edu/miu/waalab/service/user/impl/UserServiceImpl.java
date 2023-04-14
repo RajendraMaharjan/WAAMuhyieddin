@@ -5,15 +5,17 @@ import edu.miu.waalab.domain.post.Post;
 import edu.miu.waalab.domain.post.dto.PostDTO;
 import edu.miu.waalab.domain.post.dto.PostsDTO;
 import edu.miu.waalab.domain.user.User;
-import edu.miu.waalab.domain.user.dto.UsersDTO;
-import edu.miu.waalab.domain.user.dto.UserDTO;
-import edu.miu.waalab.repository.comment.CommentRepository;
+import edu.miu.waalab.domain.user.dto.response.UserResponse;
+import edu.miu.waalab.domain.user.dto.response.UsersDTO;
+import edu.miu.waalab.domain.user.dto.request.UserDTO;
 import edu.miu.waalab.repository.post.PostRepository;
 import edu.miu.waalab.repository.user.UserRepository;
 import edu.miu.waalab.service.comment.CommentService;
 import edu.miu.waalab.service.post.adapters.DTOMapperAdapter;
 import edu.miu.waalab.service.user.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -39,18 +42,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getUser(Long id) {
+    public Optional<UserResponse> getUser(Long id) {
         Optional<User> oUser = userRepository.findById(id);
         if (oUser.isPresent()) {
-            return Optional.of(adapter.convertObject(oUser.get(), UserDTO.class));
+            return Optional.of(adapter.convertObject(oUser.get(), UserResponse.class));
         } else {
             return Optional.empty();
         }
     }
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
-        return adapter.getUserDTOFromUser(userRepository.save(adapter.getUserFromUserDTO(userDTO)));
+        User user = adapter.getUserFromUserDTO(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return adapter.getUserDTOFromUser(userRepository.save(user));
     }
 
     @Override

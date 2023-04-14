@@ -25,4 +25,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select c from User u JOIN u.posts p JOIN p.comments c where u.id=:userId AND p.id=:postId AND c.id=:commentId")
     Optional<Comment> getCommentWithInAPostFromAUser(@Param("userId") Long userId, @Param("postId") Long postId, @Param("commentId") Long commentId);
+
+    User findUserByEmail(String email);
 }

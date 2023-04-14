@@ -7,12 +7,13 @@ import edu.miu.waalab.domain.post.dto.PostV2DTO;
 import edu.miu.waalab.domain.post.dto.PostsDTO;
 import edu.miu.waalab.domain.post.dto.PostsV2DTO;
 import edu.miu.waalab.domain.user.User;
-import edu.miu.waalab.domain.user.dto.UserDTO;
-import edu.miu.waalab.domain.user.dto.UsersDTO;
+import edu.miu.waalab.domain.user.dto.request.UserDTO;
+import edu.miu.waalab.domain.user.dto.response.UsersDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class DTOMapperAdapter {
 
             UserDTO userDTO = new UserDTO();
             userDTO.setId(user.getId());
-            userDTO.setName(user.getName());
+            userDTO.setFirstname(user.getFirstname());
             userDTO.setPosts(postDTOList);
             return userDTO;
         }).collect(Collectors.toList());
@@ -54,17 +55,15 @@ public class DTOMapperAdapter {
     }
 
     public User getUserFromUserDTO(UserDTO ud) {
-        return new User(ud.getId(), ud.getName(), ud.getPosts().stream()
-//                .map(postDTO -> convertObject(postDTO, Post.class))
+        return new User(ud.getId(), ud.getFirstname(), ud.getPassword(), ud.getEmail(), ud.getRoles(), ud.getPosts() != null ? ud.getPosts().stream()
                 .map(postDTO -> {
                     Post p = new Post(postDTO.getTitle(), postDTO.getContent(), postDTO.getAuthor(), postDTO.getComments());
                     return p;
-                }).collect(Collectors.toList()));
+                }).collect(Collectors.toList()) : null);
     }
 
     public UserDTO getUserDTOFromUser(User u) {
-        List<PostDTO> pds = u.getPosts().stream().map(p -> convertObject(p, PostDTO.class)).collect(Collectors.toList());
-
-        return new UserDTO(u.getId(), u.getName(), pds);
+        List<PostDTO> pds = u.getPosts() != null ? u.getPosts().stream().map(p -> convertObject(p, PostDTO.class)).collect(Collectors.toList()) : new ArrayList<>();
+        return new UserDTO(u.getId(), u.getFirstname(), u.getPassword(), u.getEmail(), pds, u.getRoles());
     }
 }
